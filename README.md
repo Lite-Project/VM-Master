@@ -1,5 +1,5 @@
 # VM-Master
-Made to be your simple VM creator.
+Made to be your simple VM creator.  
 Has only been tested on Powershell v5.1
 
 # How to use
