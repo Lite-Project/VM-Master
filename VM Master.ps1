@@ -6,10 +6,10 @@
 # Version v0.1
 #
 # W.I.P
-# [7] in VM creation is going to be VHD type eg; vhdxor vhd, dynamic or fixed
+# [7] in VM creation is going to be VHD type eg; .vhdx or .vhd, dynamic or fixed
 #
 
-if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V-All -Online).State -ne "Enabled") {
+if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V-Management-PowerShell -Online).State -eq "Enabled") {
 $intrvm = Get-VMHost
 $LP = $intrvm.LogicalProcessorCount
 $RAM = [Math]::Round(($intrvm.MemoryCapacity/1Gb),1)
@@ -384,7 +384,10 @@ OLDER OS DOES NOT SUPPORT VHDX
             if ($VMPrem.Name -ne $null) {
                 Write-Host "Creating VM."
                 New-VM -Name $($VMPrem.Name) `
-                    -Generation $($VMPrem.Gen) `                    -MemoryStartupBytes $($VMPrem.RAM) `                    -NewVHDPath "$global:VHDpath\$($VMPrem.Name).vhdx" `                    -NewVHDSizeBytes $($VMPrem.VHDSize) `
+                    -Generation $($VMPrem.Gen) `
+                    -MemoryStartupBytes $($VMPrem.RAM) `
+                    -NewVHDPath "$global:VHDpath\$($VMPrem.Name).vhdx" `
+                    -NewVHDSizeBytes $($VMPrem.VHDSize) `
                     -SwitchName $($VMPrem.Switch)
 
                 if ($VMPrem.BootMethod -match ".iso") {
